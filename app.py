@@ -13,8 +13,7 @@ def home():
         searchQuery = "cool"
     return render_template("index.html", queriedPosts=redditScraper.queryPosts(searchQuery), searchQuery=searchQuery, subreddit=redditScraper.subreddit)
 
-@app.route('/save', methods=['POST'])
+""" @app.route('/save', methods=['POST'])
 def saveToDB():
     #one database, user can put, post, get and delete for any posts
-    #put will take the posts on the page and overwrite the entire db
-    #post just keeps adding more
+    #put will take the posts on the page and overwrite the entire db post just keeps adding more """
