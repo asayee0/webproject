@@ -1,5 +1,6 @@
 import redditScraper
 from flask import Flask, render_template, request, redirect, url_for
+from models import db
 
 app = Flask(__name__)
 
@@ -7,12 +8,13 @@ app = Flask(__name__)
 @app.route('/home', methods=['POST','GET'])
 def home():
     if request.method == 'POST':
-        return render_template("index.html", queriedPosts=redditScraper.queryPosts(request.form['searchQuery']))
+        searchQuery = request.form['searchQuery']
     else:
-        return render_template("index.html", queriedPosts=redditScraper.queryPosts("cool"))
+        searchQuery = "cool"
+    return render_template("index.html", queriedPosts=redditScraper.queryPosts(searchQuery), searchQuery=searchQuery, subreddit=redditScraper.subreddit)
 
-""" @app.route('/query', methods=['POST','GET'])
-def query():
-    queriedPosts = request.form['searchQuery']
-    return render_template("index.html", queriedPosts=redditScraper.queryPosts(queriedPosts))
- """
+@app.route('/save', methods=['POST'])
+def saveToDB():
+    #one database, user can put, post, get and delete for any posts
+    #put will take the posts on the page and overwrite the entire db
+    #post just keeps adding more
