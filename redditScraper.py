@@ -10,24 +10,38 @@ reddit = praw.Reddit(client_id='JsVVo5XWmdYP2w', \
 
 #CHANGE USERNAME AND PW BEFORE SUBMITTING
 
-#DEMO
-#subreddit = input("Subreddit: ")
-#subreddit = reddit.subreddit(subreddit)
-
 subreddit = reddit.subreddit("apexlegends")
 
-def queryPosts(searchQuery):
+def changeSubreddit(newSubreddit):
+    global subreddit 
+    subreddit = reddit.subreddit(newSubreddit)
+
+def queryPosts(searchQuery, sortingMethod, limit):
+    if (sortingMethod is not "confidence" or 
+        sortingMethod is not "top" or 
+        sortingMethod is not "new" or
+        sortingMethod is not "controversial" or
+        sortingMethod is not "old" or
+        sortingMethod is not "random" or
+        sortingMethod is not "qa" or
+        sortingMethod is not "live" or
+        sortingMethod is not "blank"):
+        error = "Not a valid sorting method"
+
     queriedPosts = []
-    for submission in subreddit.search(searchQuery, sort="top", limit=5):
-        post = { 
-            "title": submission.title,
-            "score": submission.score,
-            "id": submission.id, 
-            "url": "https://www.reddit.com" + submission.permalink,
-            "comments": submission.num_comments,
-            "created": submission.created,
-            "body": submission.selftext,
-            "media": submission.url
-        }
-        queriedPosts.append(post)
+    searchQuery = searchQuery.split(", ")
+    for query in searchQuery:
+        for submission in subreddit.search(query, sort=sortingMethod, limit=limit):
+            post = { 
+                "title": submission.title,
+                "score": submission.score,
+                "id": submission.id, 
+                "url": "https://www.reddit.com" + submission.permalink,
+                "comments": submission.num_comments,
+                "created": submission.created,
+                "body": submission.selftext,
+                "media": submission.url
+            }
+            queriedPosts.append(post)
+
     return queriedPosts

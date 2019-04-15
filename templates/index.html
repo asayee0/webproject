@@ -13,22 +13,46 @@
 <body>
     <div class="header">
         <h1>Subreddit: r/{{ subreddit }}</h1>
-
+        <form action="/home" method="post">
+            <div class="form-group">
+                <input type="text" name="newSubreddit" placeholder="Change subreddit">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
 
     </div>
 
     <div class="container">
         <div class="row">
             <div class="col">
-                <h2>Search Query: {{ searchQuery }}</h2>
-                Results: #Drop list with the number of results to return#
+                <div class="container">
+                    <form action="/home" method="post">
+                        <div class="form-group">
+                            Sort by:
+                            <select name="sortingMethod">
+                                <option value="confidence">Confidence</option>
+                                <option value="top">Top</option>
+                                <option value="new">New</option>
+                                <option value="controversial">Controversial</option>
+                                <option value="old">Old</option>
+                                <option value="random">Random</option>
+                                <option value="qa">Qa</option>
+                                <option value="live">Live</option>
+                                <option value="blank">Blank</option>
+                            </select>
+                            Currently sorted by: <b>{{ sortingMethod }}</b>
+                        </div>
+                        <h2>Search Query: {{ searchQuery }}</h2>
+                        Results: #Drop list with the number of results to return#
 
-                <form action="/home" method="post">
-                    <div class="form-group">
-                        <input type="text" name="searchQuery" placeholder="Search keywords">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
+
+                        <div class="form-group">
+                            <input type="text" name="searchQuery" placeholder="Search keywords">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
                 <form action="/save" method="post">
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
