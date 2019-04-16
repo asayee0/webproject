@@ -1,8 +1,16 @@
 from flask_sqlalchemy import SQLAlchemy
 
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db/anime.db'
 db = SQLAlchemy()
 
-class User(db.Model):
+def initdb():
+    app.app_context().push()
+    db.init_app(app)
+    db.create_all()
+    return app
+
+class Post(db.Model):
     title = db.Column(db.String(80), nullable=False)
     score = db.Column(db.Integer)
     id = db.Column(db.String(80), primary_key=True)
