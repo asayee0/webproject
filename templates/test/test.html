@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="author" content="SitePoint">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card border-primary" id="subredditSection" style="margin-top:50px; margin-bottom:50px;">
+                    <div class="card-body" style="height:100px;">
+                        <div class="text-center">
+                            <h1>Subreddit: r/apexlegends</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="card" id="searchSection" style="margin-bottom:0px;">
+                    <div class="card-body" style="height:150px;">
+                        <div class="text-center">
+                            <h1>Search</h1>
+                            <input type="text" name="" id="" placeholder="Search">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron" id="postSection">
+        <div class="row">
+            <div class="row">
+                <div class="card-deck">
+                    <div class="post card border-primary mb-3 w-33" style="height:250px;">
+                        <div class="card-header">Score: {{ submission.score }}</div>
+                        <div class="card-body text-primary">
+                            <a href="{{ submission.url }}">
+                                <h5 class="card-title">{{ submission.title }}</h5>
+                            </a>
+                            <p class="card-text">
+                                {% if submission.body != '' %}
+                                {{ submission.body }}
+    
+                                {% else %}
+                                <a href="{{ submission.media }}">
+                                    {{ submission.media }}
+                                </a>
+    
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="post card border-primary mb-3 w-33" style="height:250px;">
+                        <div class="card-header">Score: {{ submission.score }}</div>
+                        <div class="card-body text-primary">
+                            <a href="{{ submission.url }}">
+                                <h5 class="card-title">{{ submission.title }}</h5>
+                            </a>
+                            <p class="card-text">
+                                {% if submission.body != '' %}
+                                {{ submission.body }}
+    
+                                {% else %}
+                                <a href="{{ submission.media }}">
+                                    {{ submission.media }}
+                                </a>
+    
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="post card border-primary mb-3 w-33" style="height:250px;">
+                        <div class="card-header">Score: {{ submission.score }}</div>
+                        <div class="card-body text-primary">
+                            <a href="{{ submission.url }}">
+                                <h5 class="card-title">{{ submission.title }}</h5>
+                            </a>
+                            <p class="card-text">
+                                {% if submission.body != '' %}
+                                {{ submission.body }}
+    
+                                {% else %}
+                                <a href="{{ submission.media }}">
+                                    {{ submission.media }}
+                                </a>
+    
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- {%for loop%}
+                        {%if cards % 3 == 0%}
+                            div.row
+                            div.card-deck
+                        {%endif%}
+                                div.card
+                                {{post}}
+                    {%endfor%} -->
+        </div>
+    </div>
+
+
+
+
+
+</body>
+
+</html>
