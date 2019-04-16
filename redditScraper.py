@@ -10,7 +10,7 @@ reddit = praw.Reddit(client_id='JsVVo5XWmdYP2w', \
 
 #CHANGE USERNAME AND PW BEFORE SUBMITTING
 
-subreddit = reddit.subreddit("apexlegends")
+subreddit = reddit.subreddit("cats")
 
 def changeSubreddit(newSubreddit):
     global subreddit 

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="author" content="SitePoint">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/stylesheet.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Subreddit: r/{{ subreddit }}</h1>
+        <form action="/home" method="post">
+            <div class="form-group">
+                <input type="text" name="newSubreddit" placeholder="Change subreddit">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="container">
+                    <form action="/home" method="post">
+                        <div class="form-group">
+                            Sort by:
+                            <select name="sortingMethod">
+                                <option value="confidence">Confidence</option>
+                                <option value="top">Top</option>
+                                <option value="new">New</option>
+                                <option value="controversial">Controversial</option>
+                                <option value="old">Old</option>
+                                <option value="random">Random</option>
+                                <option value="qa">Qa</option>
+                                <option value="live">Live</option>
+                                <option value="blank">Blank</option>
+                            </select>
+                            Currently sorted by: <b>{{ sortingMethod }}</b>
+                        </div>
+                        <h2>Search Query: {{ searchQuery }}</h2>
+                        Results: #Drop list with the number of results to return#
+
+
+                        <div class="form-group">
+                            <input type="text" name="searchQuery" placeholder="Search keywords">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+                <form action="/save" method="post">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+
+            <div class="col">
+                {% for submission in queriedPosts %}
+                <div class="row">
+                    <div class="card border-primary mb-3" style="width: 40rem;">
+                        <div class="card-header">Score: {{ submission.score }}</div>
+                        <div class="card-body text-primary">
+                            <a href="{{ submission.url }}">
+                                <h5 class="card-title">{{ submission.title }}</h5>
+                            </a>
+                            <p class="card-text">
+                                {% if submission.body != '' %}
+                                {{ submission.body }}
+
+                                {% else %}
+                                <a href="{{ submission.media }}">
+                                    {{ submission.media }}
+                                </a>
+
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
