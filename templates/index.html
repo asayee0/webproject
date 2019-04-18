@@ -33,7 +33,8 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">Reddit Content Filter</a>
+      <a class="navbar-brand js-scroll-trigger" href="#page-top"><p>Reddit Content Filter</p></a>
+      <a class="navbar-brand js-scroll-trigger" href="#page-top"><p>Database</p></a>
       <form action="/home" method="post">
         <div class="form-group">
           <input type="text" name="newSubreddit" placeholder="Browsing r/{{ subreddit }}">
@@ -51,29 +52,36 @@
         <div class="col-lg-10 align-self-end">
           <h1 class="text-uppercase text-white font-weight-bold">Search Subreddits</h1>
           <p class="text-white-75 font-weight-light mb-5">Currently browsing: {{ subreddit }}</p>
+          <h5>Reddit Content Filter is a web app designed to interface between users and a custom Reddit search
+            engine.
+            It was built as a base to allow administrators of subreddits to search for and filter negative content for
+            them to easily find and remove.
+          </h5>
           <hr class="divider my-4">
         </div>
         <div class="col-lg-8 align-self-baseline">
           <form action="/home" method="post">
             <div class="container" style="margin-bottom:25px;">
               <input type="text" name="searchQuery" placeholder="Current Query: &quot;{{ searchQuery }}&quot;">
-              <a href="#portfolio"><button type="submit" class="btn btn-primary btn-sm js-scroll-trigger">Go</button></a>
+              <a href="#portfolio"><button type="submit"
+                  class="btn btn-primary btn-sm js-scroll-trigger">Go</button></a>
             </div>
             <div class="container" style="margin-bottom:25px;">
               <p class="text-white-75 font-weight-light mb-5 d-inline">Sort by:</p>
               <select class="d-inline" name="sortingMethod">
-                <option value="confidence">Confidence</option>
-                <option value="top">Top</option>
+                <option value="confidence" {% if sortingMethod == "confidence" %} selected {% endif %}">Confidence</option>
+                <option value="top" {% if sortingMethod == "top" %} selected {% endif %}>Top</option>
                 <option value="new">New</option>
-                <option value="controversial">Controversial</option>
-                <option value="old">Old</option>
-                <option value="random">Random</option>
-                <option value="qa">Qa</option>
-                <option value="live">Live</option>
-                <option value="blank">Blank</option>
+                <option value="controversial" {% if sortingMethod == "controversial" %} selected {% endif %}">Controversial</option>
+                <option value="old"" {% if sortingMethod == "old" %} selected {% endif %}>Old</option>
+                <option value="random"" {% if sortingMethod == "random" %} selected {% endif %}>Random</option>
+                <option value="qa"" {% if sortingMethod == "qa" %} selected {% endif %}>Qa</option>
+                <option value="live"" {% if sortingMethod == "live" %} selected {% endif %}>Live</option>
+                <option value="blank"" {% if sortingMethod == "blank" %} selected {% endif %}>Blank</option>
               </select>
             </div>
             <p class="text-white-75 font-weight-light mb-5">Currently sorted by: <b>{{ sortingMethod }}</b></p>
+
 
           </form>
         </div>
@@ -95,10 +103,10 @@
               </a>
               <p class="card-text">
                 {% if submission.body != '' %}
-                  {{ submission.body[0:232] }}
-                  {% if submission.body | length > 232 %}
-                  ...
-                  {% endif %}
+                {{ submission.body[0:232] }}
+                {% if submission.body | length > 232 %}
+                ...
+                {% endif %}
 
                 {% else %}
                 <a href="{{ submission.media }}">
