@@ -1,12 +1,19 @@
 import redditScraper
 from flask import Flask, render_template, request, redirect, url_for
-from . import models
+import models
+from models import Post
+import init
 
-app = Flask(__name__)
+app = init.app
+db = models.db
+init.initdb()
+
+queriedPosts = None
 
 @app.route('/')
 @app.route('/home', methods=['POST','GET'])
 def home():
+    global queriedPosts
     searchQuery = None
     sortingMethod = "top"
     limit = 5
@@ -16,21 +23,54 @@ def home():
             searchQuery = "cool"
         else:
             searchQuery = request.form["searchQuery"]
-            sortingMethod = request.form["sortingMethod"]
+            sortingMethod = request.form["sortingMethod"]       
 
     else:
         searchQuery = "cool"
-        #just render a default template
+    
+    queriedPosts=redditScraper.queryPosts(searchQuery, sortingMethod, limit)
 
     return render_template("index.html", 
-        queriedPosts=redditScraper.queryPosts(searchQuery, sortingMethod, limit), 
+        queriedPosts=queriedPosts, 
         searchQuery=searchQuery, 
         subreddit=redditScraper.subreddit,
         sortingMethod=sortingMethod
     )
 
-""" @app.route('/save', methods=['POST'])
-def saveToDB():
-    #one database, user can put, post, get and delete for any posts
-    #put will take the posts on the page and overwrite the entire db
-    #post just keeps adding more """
+@app.route("/savedPosts")
+def dbInterface():
+    posts = Post.query.order_by(Post.score).all()
+    return render_template("savedPosts.html", posts=posts)
+
+@app.route("/add", methods=["POST"])
+def addAllToDB():
+    global queriedPosts
+    if request.method == "POST":
+        for post in queriedPosts:
+            postToSave = Post(post["title"], post["score"], post["id"], post["url"], post["comments"], post["created"], post["body"], post["media"])
+            db.session.add(postToSave)
+        db.session.commit()
+    return redirect(url_for("dbInterface"))
+
+@app.route("/add/<post>", methods=["POST"])
+def addToDB(post):
+    if request.method == "POST":
+        postToSave = Post(post["title"], post["score"], post["id"], post["url"], post["comments"], post["created"], post["body"], post["media"])
+        db.session.add(postToSave)
+        db.session.commit()
+    return redirect(url_for("home"))
+
+@app.route("/deletePost/<postID>", methods=["POST"])
+def deletePost(postID):
+    if request.method == "POST":
+        postToDelete = Post.query.filter_by(databaseID=postID).first()
+        db.session.delete(postToDelete)
+        db.session.commit()
+    return redirect(url_for("dbInterface"))
+
+@app.route("/deleteAll", methods=["POST"])
+def deleteAllFromDB():
+    if request.method == "POST":
+        Post.query.delete()
+        db.session.commit()
+    return redirect(url_for("dbInterface"))

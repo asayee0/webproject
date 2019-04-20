@@ -33,8 +33,12 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top"><p>Reddit Content Filter</p></a>
-      <a class="navbar-brand js-scroll-trigger" href="#page-top"><p>Database</p></a>
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <p>Reddit Content Filter</p>
+      </a>
+      <a class="navbar-brand js-scroll-trigger" href="{{ url_for("dbInterface") }}">
+        <p>Database</p>
+      </a>
       <form action="/home" method="post">
         <div class="form-group">
           <input type="text" name="newSubreddit" placeholder="Browsing r/{{ subreddit }}">
@@ -69,18 +73,20 @@
             <div class="container" style="margin-bottom:25px;">
               <p class="text-white-75 font-weight-light mb-5 d-inline">Sort by:</p>
               <select class="d-inline" name="sortingMethod">
-                <option value="confidence" {% if sortingMethod == "confidence" %} selected {% endif %}">Confidence</option>
+                <option value="confidence" {% if sortingMethod == "confidence" %} selected {% endif %}">Confidence
+                </option>
                 <option value="top" {% if sortingMethod == "top" %} selected {% endif %}>Top</option>
                 <option value="new">New</option>
-                <option value="controversial" {% if sortingMethod == "controversial" %} selected {% endif %}">Controversial</option>
+                <option value="controversial" {% if sortingMethod == "controversial" %} selected {% endif %}">
+                  Controversial</option>
                 <option value="old"" {% if sortingMethod == "old" %} selected {% endif %}>Old</option>
-                <option value="random"" {% if sortingMethod == "random" %} selected {% endif %}>Random</option>
+                <option value=" random"" {% if sortingMethod == "random" %} selected {% endif %}>Random</option>
                 <option value="qa"" {% if sortingMethod == "qa" %} selected {% endif %}>Qa</option>
-                <option value="live"" {% if sortingMethod == "live" %} selected {% endif %}>Live</option>
+                <option value=" live"" {% if sortingMethod == "live" %} selected {% endif %}>Live</option>
                 <option value="blank"" {% if sortingMethod == "blank" %} selected {% endif %}>Blank</option>
               </select>
             </div>
-            <p class="text-white-75 font-weight-light mb-5">Currently sorted by: <b>{{ sortingMethod }}</b></p>
+            <p class=" text-white-75 font-weight-light mb-5">Currently sorted by: <b>{{ sortingMethod }}</b></p>
 
 
           </form>
@@ -89,17 +95,30 @@
     </div>
   </header>
 
+  <div class="jumbotron" style="padding-top:20px; height:90px;">
+    <form action="/add" method="post">
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Save All</button>
+        </div>
+    </form>
+  </div>
+
   <!-- Portfolio Section -->
   <section class="js-scroll-trigger" id="portfolio">
     <div class="container-fluid p-0">
       <div class="row no-gutters">
         {% for submission in queriedPosts %}
         <div class="col-lg-4 col-sm-6">
-          <div class="post card border-primary mb-3 w-33" style="height:250px;">
+          <div class="post card border-primary mb-3 w-33" style="height:350px;">
             <div class="card-header">Score: {{ submission.score }}</div>
             <div class="card-body text-primary">
               <a href="{{ submission.url }}">
-                <h5 class="card-title">{{ submission.title }}</h5>
+                <h5 class="card-title">
+                  {{ submission.title[0:84] }}
+                  {% if submission.title | length > 84 %}
+                  ...
+                  {% endif %}
+                </h5>
               </a>
               <p class="card-text">
                 {% if submission.body != '' %}
@@ -115,6 +134,13 @@
 
                 {% endif %}
               </p>
+            </div>
+            <div class="contaienr">
+              <div class="card-body">
+                <form action="/add/{{ submission.url }}" class="d-inline-block" method="post">
+                  <button type="submit" class="btn btn-primary">Add To Database</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>

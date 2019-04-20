@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Saved Posts</title>
+	<meta name="description" content="">
+	<meta name="author" content="SitePoint">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="jumbotron">
+		<form action="/deleteAll" , method="post">
+			<div class="container">
+				<button type="submit" class="btn btn-primary">Delete All</button>
+			</div>
+		</form>
+	</div>
+	{% for post in posts %}
+	<div class="container">
+		<div class="card">
+			<div class="card-header">Score: {{ post["score"] }}</div>
+			<div class="card-body">
+				<div class="card-text">
+					<h5 class="card-title">
+						<a href="url: {{ post["url"] }}">{{ post["title"] }}</a>
+					</h5>
+					<p class="card-text" style="margin-bottom: 20px;">
+							{% if post["body"] != '' %}
+							{{ post["body"][0:232] }}
+							{% if post["body"] | length > 232 %}
+							...
+							{% endif %}
+
+							{% else %}
+							<a href="{{ post["media"] }}">
+								{{ post["media"] }}
+							</a>
+
+							{% endif %}
+						</p>
+				</div>
+				<form action="/deletePost/{{ post["databaseID"] }}" method="post">
+					<div class="container">
+						<button type="submit" class="btn btn-primary">Delete</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</body>
+
+</html>
