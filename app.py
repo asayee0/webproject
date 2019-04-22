@@ -24,8 +24,7 @@ def home():
             searchQuery = request.form["searchQuery"]
             sortingMethod = request.form["sortingMethod"]
             limit = int(request.form["limit"])
-    
-    queriedPosts=redditScraper.queryPosts(searchQuery, sortingMethod, limit)
+        queriedPosts=redditScraper.queryPosts(searchQuery, sortingMethod, limit)
 
     return render_template("index.html", 
         queriedPosts=queriedPosts, 
@@ -49,9 +48,14 @@ def addAllToDB():
         db.session.commit()
     return redirect(url_for("dbInterface"))
 
-@app.route("/add/<post>", methods=["POST"])
-def addToDB(post):
+@app.route("/add/<postID>", methods=["POST"])
+def addToDB(postID):
     if request.method == "POST":
+        post = None
+        for p in queriedPosts:
+            if p.get("id") == postID:
+                post = p
+                break
         postToSave = Post(post["title"], post["score"], post["id"], post["url"], post["comments"], post["created"], post["body"], post["media"])
         db.session.add(postToSave)
         db.session.commit()

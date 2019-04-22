@@ -73,16 +73,16 @@
             <div class="container" style="margin-bottom:25px;">
               <p class="text-white-75 font-weight-light mb-5 d-inline">Sort by:</p>
               <select class="d-inline" name="sortingMethod" style="margin-right:30px;">
-                <option value="confidence" {% if sortingMethod == "confidence" %} selected {% endif %}">Confidence
+                <option value="confidence" {% if sortingMethod == "confidence" %} selected {% endif %}>Confidence
                 </option>
                 <option value="top" {% if sortingMethod == "top" %} selected {% endif %}>Top</option>
-                <option value="new">New</option>
-                <option value="controversial" {% if sortingMethod == "controversial" %} selected {% endif %}">
+                <option value="new" {% if sortingMethod == "new" %} selected {% endif %}>New</option>
+                <option value="controversial" {% if sortingMethod == "controversial" %} selected {% endif %}>
                   Controversial</option>
                 <option value="old"" {% if sortingMethod == "old" %} selected {% endif %}>Old</option>
-                <option value=" random"" {% if sortingMethod == "random" %} selected {% endif %}>Random</option>
+                <option value="random"" {% if sortingMethod == "random" %} selected {% endif %}>Random</option>
                 <option value="qa"" {% if sortingMethod == "qa" %} selected {% endif %}>Qa</option>
-                <option value=" live"" {% if sortingMethod == "live" %} selected {% endif %}>Live</option>
+                <option value="live"" {% if sortingMethod == "live" %} selected {% endif %}>Live</option>
                 <option value="blank"" {% if sortingMethod == "blank" %} selected {% endif %}>Blank</option>
               </select>
               <p class="text-white-75 font-weight-light mb-5 d-inline">Query Limit</p>
@@ -112,6 +112,7 @@
   <section class="js-scroll-trigger" id="portfolio">
     <div class="container-fluid p-0">
       <div class="row no-gutters">
+        {% if queriedPosts is not none %}
         {% for submission in queriedPosts %}
         <div class="col-lg-4 col-sm-6">
           <div class="post card border-primary mb-3 w-33" style="height:350px;">
@@ -142,7 +143,7 @@
             </div>
             <div class="contaienr">
               <div class="card-body">
-                <form action="/add/{{ submission.url }}" class="d-inline-block" method="post">
+                <form action="/add/{{ submission.id }}" class="d-inline-block" method="post">
                   <button type="submit" class="btn btn-primary">Add To Database</button>
                 </form>
               </div>
@@ -150,6 +151,7 @@
           </div>
         </div>
         {% endfor %}
+        {% endif %}
       </div>
     </div>
   </section>
