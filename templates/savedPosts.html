@@ -11,7 +11,13 @@
 </head>
 
 <body>
-	<div class="jumbotron">
+	<div class="jumbotron align-items-center justify-content-center text-center">
+		<div class="container">
+			<a class="font-weight-bold" href="/home">
+				<p>Reddit Content Filter</p>
+			</a>
+		</div>
+		<h1 class="text-uppercase font-weight-bold" style="margin-bottom: 20px;">Database</h1>
 		<form action="/deleteAll" , method="post">
 			<div class="container">
 				<button type="submit" class="btn btn-primary">Delete All</button>
@@ -28,19 +34,19 @@
 						<a href="url: {{ post["url"] }}">{{ post["title"] }}</a>
 					</h5>
 					<p class="card-text" style="margin-bottom: 20px;">
-							{% if post["body"] != '' %}
-							{{ post["body"][0:232] }}
-							{% if post["body"] | length > 232 %}
-							...
-							{% endif %}
+						{% if post["body"] != '' %}
+						{{ post["body"][0:232] }}
+						{% if post["body"] | length > 232 %}
+						...
+						{% endif %}
 
-							{% else %}
-							<a href="{{ post["media"] }}">
-								{{ post["media"] }}
-							</a>
+						{% else %}
+						<a href="{{ post["media"] }}">
+							{{ post["media"] }}
+						</a>
 
-							{% endif %}
-						</p>
+						{% endif %}
+					</p>
 				</div>
 				<form action="/deletePost/{{ post["databaseID"] }}" method="post">
 					<div class="container">

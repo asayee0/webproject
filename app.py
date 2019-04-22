@@ -14,19 +14,16 @@ queriedPosts = None
 @app.route('/home', methods=['POST','GET'])
 def home():
     global queriedPosts
-    searchQuery = None
+    searchQuery = ""
     sortingMethod = "top"
     limit = 5
     if request.method == 'POST':
         if "newSubreddit" in request.form:
             redditScraper.changeSubreddit(request.form["newSubreddit"])
-            searchQuery = "cool"
         else:
             searchQuery = request.form["searchQuery"]
-            sortingMethod = request.form["sortingMethod"]       
-
-    else:
-        searchQuery = "cool"
+            sortingMethod = request.form["sortingMethod"]
+            limit = int(request.form["limit"])
     
     queriedPosts=redditScraper.queryPosts(searchQuery, sortingMethod, limit)
 
