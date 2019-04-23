@@ -50,16 +50,17 @@ def addAllToDB():
 
 @app.route("/add/<postID>", methods=["POST"])
 def addToDB(postID):
+    global queriedPosts
     if request.method == "POST":
-        post = None
-        global queriedPosts
-        for p in queriedPosts:
-            if p.get("id") == postID:
-                post = p
-                break
-        postToSave = Post(post["title"], post["score"], post["id"], post["url"], post["comments"], post["created"], post["body"], post["media"])
-        db.session.add(postToSave)
-        db.session.commit()
+        if queriedPosts is not None:
+            post = None
+            for p in queriedPosts:
+                if p.get("id") == postID:
+                    post = p
+                    break
+            postToSave = Post(post["title"], post["score"], post["id"], post["url"], post["comments"], post["created"], post["body"], post["media"])
+            db.session.add(postToSave)
+            db.session.commit()
     return redirect(url_for("home"))
 
 @app.route("/deletePost/<postID>", methods=["POST"])
