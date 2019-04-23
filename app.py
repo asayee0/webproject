@@ -52,6 +52,7 @@ def addAllToDB():
 def addToDB(postID):
     if request.method == "POST":
         post = None
+        global queriedPosts
         for p in queriedPosts:
             if p.get("id") == postID:
                 post = p
