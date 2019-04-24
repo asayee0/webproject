@@ -42,10 +42,11 @@ def dbInterface():
 def addAllToDB():
     global queriedPosts
     if request.method == "POST":
-        for post in queriedPosts:
-            postToSave = Post(post["title"], post["score"], post["id"], post["url"], post["comments"], post["created"], post["body"], post["media"])
-            db.session.add(postToSave)
-        db.session.commit()
+        if queriedPosts is not None:
+            for post in queriedPosts:
+                postToSave = Post(post["title"], post["score"], post["id"], post["url"], post["comments"], post["created"], post["body"], post["media"])
+                db.session.add(postToSave)
+            db.session.commit()
     return redirect(url_for("dbInterface"))
 
 @app.route("/add/<postID>", methods=["POST"])

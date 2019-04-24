@@ -1,0 +1,1 @@
+heroku: reddit-content-filter.herokuapp.com
