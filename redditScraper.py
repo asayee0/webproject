@@ -2,6 +2,7 @@
 #See here: http://www.storybench.org/how-to-scrape-reddit-with-python/
 
 import praw
+from prawcore import NotFound
 reddit = praw.Reddit(client_id='Lqu2zqaktP7mvw', \
                      client_secret='-PSPj5n4df958RUmsq2qyGQkIp0', \
                      user_agent='reddit-content-filter', \
@@ -11,10 +12,12 @@ reddit = praw.Reddit(client_id='Lqu2zqaktP7mvw', \
 subreddit = reddit.subreddit("cats")
 
 def changeSubreddit(newSubreddit):
-    global subreddit 
-    subreddit = reddit.subreddit(newSubreddit)
-    if subreddit is None:
-        subreddit = reddit.subreddit("cats")
+    global subreddit
+    try:
+        reddit.subreddits.search_by_name(newSubreddit, exact=True)
+        subreddit = reddit.subreddit(newSubreddit)
+    except NotFound:
+        return
 
 def queryPosts(searchQuery, sortingMethod, limit):
     if (sortingMethod is not "confidence" or 
@@ -26,7 +29,8 @@ def queryPosts(searchQuery, sortingMethod, limit):
         sortingMethod is not "qa" or
         sortingMethod is not "live" or
         sortingMethod is not "blank"):
-        error = "Not a valid sorting method"
+            error = "Not a valid sorting method"
+
 
     queriedPosts = []
     searchQuery = searchQuery.split(", ")
@@ -43,5 +47,5 @@ def queryPosts(searchQuery, sortingMethod, limit):
                 "media": submission.url
             }
             queriedPosts.append(post)
-
+    print (queriedPosts)
     return queriedPosts

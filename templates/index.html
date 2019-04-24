@@ -89,6 +89,9 @@
               <select class="d-inline" name="limit">
                 <option value="5" {% if limit == "5" %} selected {% endif %}">5</option>
                 <option value="10" {% if limit == "10" %} selected {% endif %}>10</option>
+                <option value="20" {% if limit == "20" %} selected {% endif %}>20</option>
+                <option value="50" {% if limit == "50" %} selected {% endif %}>50</option>
+                <option value="100" {% if limit == "100" %} selected {% endif %}>100</option>
               </select>
             </div>
             <p class=" text-white-75 font-weight-light mb-5">Currently sorted by: <b>{{ sortingMethod }}</b></p>
