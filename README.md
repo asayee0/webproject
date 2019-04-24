@@ -12,6 +12,13 @@ To run the app locally:
 2. Run the application with `FLASK_APP=app.py flask run`
 3. Open the web app in local browser http://127.0.0.1:5000/
 
+# CS Topic
+This app was built to solve the problem of modularity of the Reddit search engine. It was built on the idea that subreddit administrators need to
+keep track of negative content to maintain a better community. Redditors can search for keywords with the basic application, as well as add their
+own custom code to the application in order to change the functionality or add modules such as Natural Language Processing to it. It acts as a 
+foundation for web developers and subreddit admininstrators to be able to interchange and adapt particular aspects of the search engine to be 
+able to tailor it to their needs.
+
 # Implemented Features & Line #
 ## REST Services 
 1. Perform GET request generated from developed API | redditScraper.py, line 14
@@ -34,8 +41,23 @@ To run the app locally:
 
 ## Cloud
 1. Successfully deployed to a cloud-based solution (i.e. Heroku, Digital Ocean, Firebase) | https://reddit-content-filter.herokuapp.com/
-3. Database online 5
+3. Database online
 4. Accessible online
+
+## Data Visualization
+1. Successfully Implementation of at least one visualization
+2. Applicability to the problem
+3. AJAX based information
+
+## CS Topic
+1. Modularity / Scalability / Efficiency / Extensibility
+2. Identification of at least one CS topic
+3. Justification of the design factors selected
+
+## IO Problem
+1. Solution
+2. Innovative
+3. Works as Described
 
 
 ## Created by Asa Yee (815009011)
