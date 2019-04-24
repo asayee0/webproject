@@ -20,6 +20,7 @@ def home():
     if request.method == 'POST':
         if "newSubreddit" in request.form:
             redditScraper.changeSubreddit(request.form["newSubreddit"])
+            
         else:
             searchQuery = request.form["searchQuery"]
             sortingMethod = request.form["sortingMethod"]

@@ -13,6 +13,8 @@ subreddit = reddit.subreddit("cats")
 def changeSubreddit(newSubreddit):
     global subreddit 
     subreddit = reddit.subreddit(newSubreddit)
+    if subreddit is None:
+        subreddit = reddit.subreddit("cats")
 
 def queryPosts(searchQuery, sortingMethod, limit):
     if (sortingMethod is not "confidence" or 
