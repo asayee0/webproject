@@ -2,13 +2,11 @@
 #See here: http://www.storybench.org/how-to-scrape-reddit-with-python/
 
 import praw
-reddit = praw.Reddit(client_id='JsVVo5XWmdYP2w', \
-                     client_secret='iKm_iNChN_WS-WceieCJRXridTo', \
-                     user_agent='Reddit Scraper Tool', \
-                     username='alphabetguyazlo', \
-                     password='Asayee22!')
-
-#CHANGE USERNAME AND PW BEFORE SUBMITTING
+reddit = praw.Reddit(client_id='Lqu2zqaktP7mvw', \
+                     client_secret='-PSPj5n4df958RUmsq2qyGQkIp0', \
+                     user_agent='reddit-content-filter', \
+                     username='asayee', \
+                     password='password123')
 
 subreddit = reddit.subreddit("cats")
 
